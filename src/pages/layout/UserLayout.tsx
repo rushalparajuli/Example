@@ -45,7 +45,7 @@ export default function UserLayout() {
               className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 transition"
             >
               <span>👥</span>
-              <span>Customers</span>
+              <span>User</span>
             </a>
             <a
               href="#"
