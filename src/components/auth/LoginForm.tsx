@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FormCancelButton, FormSubmitButton } from "../form/FormAction";
 import { EmailInput, FormInput } from "../form/FormInput";
 import { FormLabel } from "../form/FormLabel";
@@ -9,20 +9,29 @@ export interface ICredentials {
   password: string;
 }
 export default function LoginForm() {
-  const [credentials, setCredentials] = useState<ICredentials>({
-    email: "",
-    password: "",
-  });
+  const {register, handleSubmit} = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    }
+  })
 
-  console.log(credentials);
+  const submitForm = (credentials: ICredentials) => {
+    console.log("Submit Event", credentials)
+  }
 
+ 
   return (
     <>
-      <form id="loginForm" className="flex flex-col gap-5 p-4 ">
+      <form onSubmit={handleSubmit(submitForm)} id="loginForm" className="flex flex-col gap-5 p-4 ">
         <div className="flex flex-col w-full md:flex-row md:items-center">
           <FormLabel htmlFor="email">User name:</FormLabel>
           <div className="w-full md:w-3/4">
-            <EmailInput name="email" placeholder="Enter your email..." />
+            <EmailInput
+              name="email"
+              placeholder="Enter your email..."
+              handler={register}
+              />
           </div>
         </div>
 
@@ -33,6 +42,7 @@ export default function LoginForm() {
               type="password"
               name="password"
               placeholder="Enter your password..."
+              handler={register}
             />
           </div>
         </div>
