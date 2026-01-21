@@ -3,11 +3,11 @@ import { FormCancelButton, FormSubmitButton } from "../form/FormAction";
 import { FormInputControl } from "../form/FormInput";
 import { FormLabel } from "../form/FormLabel";
 import { NavLink, useNavigate } from "react-router";
-import { LoginDTO, type ICredentials } from "../../pages/auth/auth.contract";
+import { LoginDTO, type ICredentials, type IUser } from "../../pages/auth/auth.contract";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axiosInstance from "../../config/axios.config";
 import { toast } from "sonner";
-import Cookies from "js-cookie"
+import { useAuth } from "../../hooks/auth";
+
 
 
 export default function LoginForm() {
@@ -23,22 +23,12 @@ export default function LoginForm() {
     resolver: zodResolver(LoginDTO),
   });
 
+  const { login } = useAuth()
+
   const navigate = useNavigate()
-  interface LoginResponse {
-    tokens: {
-      accessToken: string;
-      refreshToken?: string;
-    };
-  }
   const submitForm = async (credentials: ICredentials) => {
     try {
-      const response = await axiosInstance.post("auth/login", credentials) as unknown as LoginResponse
-      Cookies.set("token", response.tokens.accessToken, {
-        expires: 1, sameSite: "lax"
-      })
-      console.log(response)
-
-      const loggedInUser = await axiosInstance.get('auth/me') as { name: string; role: string }
+      const loggedInUser = (await login(credentials)) as IUser
       toast.success("Welcome to user Panel, " + loggedInUser.name)
       navigate("/" + loggedInUser.role)
 
