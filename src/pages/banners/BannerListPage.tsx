@@ -3,7 +3,7 @@ import { TableHedaer } from "../../components/ui/TableHeader";
 
 export default function BannerListPage() {
     return (<>
-        <section className="w-full p-4 bg-white rounded-lg shadow-md">
+        <section className="w-full p-5 bg-white rounded-lg shadow-md">
             {/* Header row: Title, CTA and Search */}
             <TableHedaer title="Banner" showSearch={true} btnTxt="+ Add Banner" btnUrl={'/admin/banner/create'} />
 
