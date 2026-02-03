@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { TableHedaer } from "../../components/ui/TableHeader";
 import { useAuth } from "../../hooks/auth";
-import { BannerEditDTO, type IBannerEditData } from "./banner.contract";
+import { CategoryEditDTO, type ICategoryEditData } from "./category.contract";
 import { FormLabel } from "../../components/form/FormLabel";
 import { FileInput, FormInputControl, SelectInput } from "../../components/form/FormInput";
 import { FormCancelButton, FormSubmitButton } from "../../components/form/FormAction";
@@ -11,89 +11,70 @@ import axiosInstance from "../../config/axios.config";
 import { useNavigate, useParams } from "react-router";
 import { useCallback, useEffect, useState } from "react";
 
-export default function BannerEditPage() {
+export default function CategoryEditPage() {
     const { loggedInUser } = useAuth()
     const params = useParams()
     const [loading, setLoading] = useState<boolean>(true)
-    const { control, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<IBannerEditData>({
+    const { control, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<ICategoryEditData>({
         defaultValues: {
-            title: "",
-            url: "",
+            name: "",
             status: "",
             image: null
         },
-        resolver: zodResolver(BannerEditDTO)
+        resolver: zodResolver(CategoryEditDTO)
     })
     const navigate = useNavigate()
-    const submitHandler = async (data: IBannerEditData) => {
+    const submitHandler = async (data: ICategoryEditData) => {
         try {
-            await axiosInstance.put("/banner/" + params.id, data, {
+            await axiosInstance.put("/category/" + params.id, data, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
             })
             toast.success("Banner Edited successfully!")
-            navigate(`/${loggedInUser?.role}/banners`)
+            navigate(`/${loggedInUser?.role}/categories`)
         } catch {
             toast.error("Banner cannot be edited at this moment. Please try again later!!!")
         }
 
     }
-    const getBannerDetail = useCallback(async () => {
+    const getCategoryDetail = useCallback(async () => {
         try {
-            const response = await axiosInstance.get("/banner/" + params.id)
-            setValue("title", response.data.title)
-            setValue("url", response.data.url)
+            const response = await axiosInstance.get("/category/" + params.id)
+            setValue("name", response.data.name)
             setValue("status", response.data.status)
         } catch {
-            toast.error("Banner cannot be fetched at this moment. Please try again later!!!")
-            navigate(`/${loggedInUser?.role}/banners`)
+            toast.error("Category cannot be fetched at this moment. Please try again later!!!")
+            navigate(`/${loggedInUser?.role}/categories`)
         } finally {
             setLoading(false)
         }
         // eslint-disable-next-line 
     }, [params])
-
     useEffect(() => {
-        getBannerDetail()
-    }, [getBannerDetail])
+        getCategoryDetail()
+    }, [getCategoryDetail])
     return (
         <section className="flex flex-col gap-6">
-            <TableHedaer title="Banner Edit Page" showSearch={false} btnTxt="<-Go Back" btnUrl={`/${loggedInUser?.role}/banners`} />
-            <div className="overflow-x-auto rounded-lg shadow bg-gray-200 p-5">
-
+            <TableHedaer title="Category Edit Page" showSearch={false} btnTxt="<-Go Back" btnUrl={`/${loggedInUser?.role}/categories`} />
+            <div className=" overflow-x-auto rounded-lg shadow bg-gray-200 p-5">
                 {
                     loading ? (
                         <>Loading...</>
                     ) : (
                         <form onSubmit={handleSubmit(submitHandler)} className="flex flex-col gap-5">
                             <div className="flex">
-                                <FormLabel htmlFor="title" >Title:</FormLabel>
+                                <FormLabel htmlFor="name" >Name:</FormLabel>
                                 <div className="w-3/4">
                                     <FormInputControl
                                         control={control}
-                                        name="title"
+                                        name="name"
                                         type="text"
-                                        placeholder="Enter banner title here..."
-                                        errMsg={errors.title?.message}
+                                        placeholder="Enter category title here..."
+                                        errMsg={errors.name?.message}
                                     />
                                 </div>
                             </div>
-
-
-                            <div className="flex">
-                                <FormLabel htmlFor="url" >Url:</FormLabel>
-                                <div className="w-3/4">
-                                    <FormInputControl
-                                        control={control}
-                                        name="url"
-                                        type="url"
-                                        placeholder="Enter banner link here..."
-                                        errMsg={errors.url?.message}
-                                    />
-                                </div>
-                            </div>
-
                             <div className="flex">
                                 <FormLabel htmlFor="status" >Status:</FormLabel>
                                 <div className="w-3/4">
@@ -108,9 +89,8 @@ export default function BannerEditPage() {
                                     />
                                 </div>
                             </div>
-
                             <div className="flex">
-                                <FormLabel htmlFor="image" >Image:</FormLabel>
+                                <FormLabel htmlFor="image" >Logo:</FormLabel>
                                 <div className="w-3/4">
                                     <FileInput
                                         name="image"
@@ -118,8 +98,6 @@ export default function BannerEditPage() {
                                         errMsg={errors.image?.message} />
                                 </div>
                             </div>
-
-
                             <div className="flex flex-col md:flex-row w-full  justify-end">
                                 <div className="w-3/4 flex gap-3">
                                     <FormCancelButton disabled={isSubmitting} label="Reset" />

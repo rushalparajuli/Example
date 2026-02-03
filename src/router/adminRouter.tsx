@@ -2,19 +2,39 @@ import UserLayout from "../pages/layout/UserLayout";
 import UserDashboard from "../pages/dashboard/UserDashboard";
 import UserListPage from "../pages/user/UserListPage";
 import ErrorPage from "../pages/ErrorPage";
+
 import BannerListPage from "../pages/banners/BannerListPage";
 import BannerCreatePage from "../pages/banners/BannerCreatePage";
 import BannerEditPage from "../pages/banners/BannerEditPage";
+
+import BrandListPage from "../pages/brands/BrandListPage";
+import BrandCreatePage from "../pages/brands/BrandCreatePage";
+import BrandEditPage from "../pages/brands/BrandEditPage";
+
+import CategoryListPage from "../pages/categories/CategoryListPage";
+import CategoryCreatePage from "../pages/categories/CategoryCreatePage";
+import CategoryEditPage from "../pages/categories/CategoryEditPage";
 
 
 export const adminRoutes = [{
     path: "/admin", element: <UserLayout />, children: [
         { index: true, Component: UserDashboard, },
+
         { path: "banners", element: <BannerListPage /> },
         { path: "banner/create", element: <BannerCreatePage /> },
-        { path: "banner/:id", element: <BannerEditPage />},
+        { path: "banner/:id", element: <BannerEditPage /> },
+
+        { path: "brands", element: <BrandListPage /> },
+        { path: "brand/create", element: <BrandCreatePage /> },
+        { path: "brand/:id", element: <BrandEditPage /> },
+
+        { path: "categories", element: <CategoryListPage /> },
+        { path: "category/create", element: <CategoryCreatePage /> },
+        { path: "category/:id", element: <CategoryEditPage /> },
+
         { path: "user", element: <UserListPage /> },
         { path: "user/:userId", element: <UserListPage /> },
+
         { path: "*", element: (<ErrorPage code={404} redirectLink="/admin" redirectTxt="Go Back To Home!!!" />), },
     ],
 },]

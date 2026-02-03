@@ -77,11 +77,11 @@ export default function BannerListPage() {
                 <table className="min-w-full text-left border border-gray-200 rounded-tl-lg rounded-tr-lg overflow-hidden">
                     <thead className="bg-stone-900/75">
                         <tr>
-                            <th className="px-4 py-3 font-medium text-gray-100">Title</th>
-                            <th className="px-4 py-3 font-medium text-gray-100">Thumbnail</th>
-                            <th className="px-4 py-3 font-medium text-gray-100">Status</th>
-                            <th className="px-4 py-3 font-medium text-gray-100">URL</th>
-                            <th className="px-4 py-3 font-medium text-gray-100">Actions</th>
+                            <th className="text-center px-4 py-3 font-medium text-gray-100">Title</th>
+                            <th className="text-center px-4 py-3 font-medium text-gray-100">Thumbnail</th>
+                            <th className="text-center px-4 py-3 font-medium text-gray-100">Status</th>
+                            <th className="text-center px-4 py-3 font-medium text-gray-100">URL</th>
+                            <th className="text-center px-4 py-3 font-medium text-gray-100">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,20 +95,20 @@ export default function BannerListPage() {
                                     banners && banners.length ? (
                                         banners.map((i: IBanner, idx) => (
                                             <tr key={idx} className="border-b boarder-b-gray-200 last:border-1 hover:bg-stone-100">
-                                                <td className="px-4 py-3 whitespace-nowrap text-gray-900">{i.title}</td>
+                                                <td className="text-center px-4 py-3 whitespace-nowrap text-gray-900">{i.title}</td>
                                                 <td className="px-4 py-3">
                                                     <img
                                                         src={i.image.url}
                                                         alt={i.title}
-                                                        className="w-25 rounded-md object-cover "
+                                                        className="w-20 rounded-md object-cover mx-auto"
                                                     />
                                                 </td>
-                                                <td className="px-4 py-3">
+                                                <td className="text-center px-4 py-3">
                                                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${i.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                                                         {i.status === 'active' ? "Published" : "Un-Published"}
                                                     </span>
                                                 </td>
-                                                <td className="px-4 py-3">
+                                                <td className="text-center px-4 py-3">
                                                     <a
                                                         href={i.url}
                                                         target="_banner"
@@ -117,13 +117,16 @@ export default function BannerListPage() {
                                                         {i.url}
                                                     </a>
                                                 </td>
-                                                <td className="px-4 py-3 text-center">
-                                                    <RowActions
-                                                        editUrl={"/admin/banner/" + i._id}
-                                                        rowId={i._id}
-                                                        onDeleteConfirm={onDeleteConfirm}
-                                                    />
+                                                <td className="px-4 py-3">
+                                                    <div className="flex justify-center items-center gap-3">
+                                                        <RowActions
+                                                            editUrl={"/admin/banner/" + i._id}
+                                                            rowId={i._id}
+                                                            onDeleteConfirm={onDeleteConfirm}
+                                                        />
+                                                    </div>
                                                 </td>
+
                                             </tr>
                                         ))
                                     ) : <tr className="border-b boarder-b-gray-200 last:border-1 hover:bg-stone-100">

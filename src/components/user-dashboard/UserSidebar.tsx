@@ -49,11 +49,11 @@ export const UserSidebar = ({ loggedInUser }: Readonly<{ loggedInUser: IUser }>)
             {
               loggedInUser && (loggedInUser.role === 'admin' || loggedInUser.role === 'seller') ? <li>
                 <NavLink
-                  to={loggedInUser && `/${loggedInUser.role}/brand`}
+                  to={loggedInUser && `/${loggedInUser.role}/brands`}
                   className="flex items-center gap-3 px-3 py-2 rounded-lg transition hover:bg-gray-700 font-medium"
                 >
                   <FaB className="text-green-400 size-5 " />
-                  Brand
+                  Brands
                 </NavLink>
               </li> : <></>
             }
