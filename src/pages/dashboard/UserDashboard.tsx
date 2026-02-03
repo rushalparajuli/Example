@@ -1,4 +1,12 @@
+import { useOutletContext } from "react-router";
+import type { IUserLayoutContext } from "../layout/UserLayout";
+import { useEffect } from "react";
+
 export default function UserDashboard() {
+  const outletContext = useOutletContext<IUserLayoutContext>()
+  useEffect(() => {
+    outletContext.setShowSidebar(true)
+  }, [])
   return (
     <>
       <div className="flex flex-col gap-8">

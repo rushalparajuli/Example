@@ -14,6 +14,7 @@ import BrandEditPage from "../pages/brands/BrandEditPage";
 import CategoryListPage from "../pages/categories/CategoryListPage";
 import CategoryCreatePage from "../pages/categories/CategoryCreatePage";
 import CategoryEditPage from "../pages/categories/CategoryEditPage";
+import ChatList from "../pages/chat/ChatList";
 
 
 export const adminRoutes = [{
@@ -35,6 +36,8 @@ export const adminRoutes = [{
         { path: "user", element: <UserListPage /> },
         { path: "user/:userId", element: <UserListPage /> },
 
-        { path: "*", element: (<ErrorPage code={404} redirectLink="/admin" redirectTxt="Go Back To Home!!!" />), },
+        { path: "messages", element: <ChatList /> },
+
+        { path: "*", element: <ErrorPage code={404} redirectLink="/admin" redirectTxt="Go Back To Home!!!" /> },
     ],
 },]
